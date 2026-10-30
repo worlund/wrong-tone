@@ -1,0 +1,12 @@
+{
+  "name": "tone-lab",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node test/synth.test.js",
+    "start": "npx --yes http-server -p 5173 -c-1 ."
+  },
+  "devDependencies": {
+    "pinyin-pro": "^3.26.0"
+  }
+}

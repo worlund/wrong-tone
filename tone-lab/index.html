@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tone Lab</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Tone Lab <span class="sub">Wrong Tone · prototype 0.1</span></h1>
+    <button id="micBtn" class="primary">Start microphone</button>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button role="tab" data-mode="practice" aria-selected="true">Practice</button>
+    <button role="tab" data-mode="free">Free detect</button>
+    <button role="tab" data-mode="calibrate">Calibrate</button>
+  </nav>
+
+  <main>
+    <section class="panel" id="prompt">
+      <div class="mode mode-practice">
+        <div class="card">
+          <div id="hanzi" class="hanzi">妈</div>
+          <div id="pinyin" class="pinyin">mā</div>
+          <div id="toneLabel" class="tone-label">Tone 1 · high level</div>
+        </div>
+        <div class="row">
+          <button id="hearBtn">Hear it</button>
+          <button id="nextBtn">Next</button>
+          <button id="disputeBtn" title="Flag the last attempt: you are sure you said it right">Detector was wrong</button>
+        </div>
+      </div>
+      <div class="mode mode-free" hidden>
+        <p class="hint">Say any single syllable, like “ma”, in any tone.</p>
+        <div id="freeResult" class="hanzi">–</div>
+      </div>
+      <div class="mode mode-calibrate" hidden>
+        <p class="hint">Count from one to ten out loud in your normal speaking voice (any language). This measures your pitch range. If you skip this, the lab learns your range from your practice attempts.</p>
+        <button id="calBtn" class="primary">Record 6 seconds</button>
+        <p id="calStatus" class="hint"></p>
+      </div>
+      <div id="verdict" class="verdict" aria-live="polite"></div>
+    </section>
+
+    <section class="panel">
+      <h2>Last utterance</h2>
+      <canvas id="contour" height="220"></canvas>
+      <div id="probs" class="probs"></div>
+      <p id="meta" class="hint"></p>
+    </section>
+
+    <section class="panel">
+      <h2>Live pitch <span id="level" class="level"><i></i></span></h2>
+      <canvas id="live" height="140"></canvas>
+    </section>
+
+    <section class="panel">
+      <h2>Settings</h2>
+      <label>Noise gate <input id="gate" type="range" min="-70" max="-20" value="-45"> <output id="gateOut">-45 dB</output></label>
+      <label>Voice
+        <select id="voice">
+          <option value="65,500">Default (65–500 Hz)</option>
+          <option value="55,300">Low voice (55–300 Hz)</option>
+          <option value="110,650">High voice (110–650 Hz)</option>
+        </select>
+      </label>
+      <label><input id="strict" type="checkbox"> Strict judging</label>
+      <label><input id="autoNext" type="checkbox" checked> Next prompt after a pass</label>
+      <p id="range" class="hint"></p>
+    </section>
+
+    <section class="panel">
+      <h2>Results <span id="acc" class="sub"></span></h2>
+      <table id="matrix"></table>
+      <div class="row">
+        <button id="exportBtn">Export attempts (JSON)</button>
+        <button id="clearBtn">Clear</button>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

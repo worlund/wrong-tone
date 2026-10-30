@@ -1,0 +1,120 @@
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: #000;
+  color: #e8e4dc;
+  font-family: system-ui, "Segoe UI", "Microsoft YaHei", "PingFang SC", sans-serif;
+}
+
+/* Rendered at a low internal resolution, upscaled without smoothing. */
+#view {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+}
+
+#ui {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+
+
+.screen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: rgba(8, 7, 3, 0.72);
+  text-align: center;
+  pointer-events: auto;
+  user-select: none;
+}
+.screen h1 {
+  margin: 0;
+  font-size: clamp(32px, 6vw, 64px);
+  letter-spacing: 0.08em;
+  color: #e9d98a;
+}
+.screen p {
+  margin: 0;
+  padding: 0 16px;
+  color: #b8ad86;
+}
+.screen[hidden], .debug-overlay[hidden] { display: none; }
+.screen.clickable { cursor: pointer; }
+.screen.error h1 { color: #e0705a; }
+
+.debug-overlay {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  margin: 0;
+  padding: 6px 8px;
+  font: 12px/1.4 ui-monospace, Consolas, monospace;
+  color: #d8f0c0;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.hud { position: fixed; inset: 0; pointer-events: none; }
+.hud .crosshair {
+  position: absolute; left: 50%; top: 50%; width: 4px; height: 4px; margin: -2px 0 0 -2px;
+  border-radius: 50%; background: rgba(255, 250, 230, 0.75); box-shadow: 0 0 2px #000;
+}
+.hud .prompt {
+  position: absolute; left: 50%; top: calc(50% + 22px); transform: translateX(-50%);
+  font-size: 15px; color: #f2ead0; text-shadow: 0 1px 2px #000;
+}
+.hud .objective {
+  position: absolute; left: 24px; bottom: 24px; max-width: 40vw;
+  font-size: 14px; color: #d8cd9f; text-shadow: 0 1px 2px #000;
+}
+.hud .hint { position: absolute; right: 24px; bottom: 24px; font-size: 14px; color: #d8cd9f; text-shadow: 0 1px 2px #000; }
+.hud .subtitle {
+  position: absolute; left: 50%; bottom: 72px; transform: translateX(-50%);
+  text-align: center; text-shadow: 0 2px 4px #000; opacity: 0;
+}
+.hud .hanzi { font-size: 34px; color: #fff; }
+.hud .pinyin { font-size: 16px; color: #e9d98a; }
+.hud .meaning { font-size: 13px; color: #b8ad86; }
+.hud .mic {
+  position: absolute; right: 24px; bottom: 56px; width: 160px; height: 8px;
+  background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.25);
+}
+.hud .mic .level { position: absolute; left: 0; top: 0; bottom: 0; background: #7fd49b; }
+.hud .mic.loud .level { background: #e0705a; }
+.hud .mic .threshold { position: absolute; top: -4px; bottom: -4px; width: 2px; background: #e0705a; }
+.hud .mic[hidden], .hud .caught[hidden], .hud .mic .threshold[hidden] { display: none; }
+.hud .fade { position: absolute; inset: 0; background: #000; opacity: 0; }
+.hud .caught {
+  position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  background: radial-gradient(circle, rgba(60, 0, 0, 0.85), #000); gap: 6px;
+}
+.hud .caught .hanzi { font-size: 52px; color: #e0705a; }
+
+.report {
+  position: fixed; inset: 0; overflow: auto; padding: 48px 16px; box-sizing: border-box;
+  background: rgba(10, 9, 5, 0.94); pointer-events: auto; text-align: center;
+}
+.report h1 { margin: 0 0 8px; color: #e9d98a; letter-spacing: 0.06em; }
+.report .stats { color: #b8ad86; margin: 0 0 24px; }
+.report table { margin: 0 auto; border-collapse: collapse; text-align: left; max-width: 100%; }
+.report th, .report td { padding: 10px 14px; border-bottom: 1px solid #2c281a; vertical-align: middle; }
+.report th { color: #8d8a75; font-weight: 500; font-size: 13px; }
+.report .hanzi { font-size: 26px; color: #fff; }
+.report .pinyin { color: #e9d98a; }
+.report .meaning { font-size: 13px; color: #b8ad86; }
+.report tr.ok td:nth-child(3) { color: #7fd49b; }
+.report tr.bad td:nth-child(3) { color: #e0705a; }
+.report .muted { color: #8d8a75; font-size: 13px; }
+.report canvas { background: #15130c; border-radius: 4px; }
+.report .again {
+  margin-top: 24px; font: inherit; font-size: 16px; padding: 10px 28px; cursor: pointer;
+  color: #15130c; background: #e9d98a; border: none; border-radius: 6px;
+}
